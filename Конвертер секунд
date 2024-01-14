@@ -1,0 +1,23 @@
+-- Создайте процедуру ИЛИ функцию, которая принимает кол-во сек и формат их в кол-во дней, часов, минут и секунд.
+DROP PROCEDURE IF EXISTS sec_converter;
+DELIMITER $$ 
+CREATE PROCEDURE sec_converter
+(
+input_sec INT 
+)
+BEGIN
+	DECLARE s INT; 
+	DECLARE `day` INT DEFAULT 0;
+    DECLARE `hour` INT DEFAULT 0;
+    DECLARE min INT DEFAULT 0;
+    DECLARE sec INT DEFAULT 0;
+	SET s = input_sec;
+    SET `day` = s DIV (3600 * 24);
+    SET `hour` = s % (3600 * 24) DIV 3600;
+    SET min = s % 3600 DIV 60;
+    SET sec = s % 60;
+    
+	SELECT `day`, `hour`, min, sec;
+END ;
+
+CALL sec_converter(123456);
